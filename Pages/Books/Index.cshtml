@@ -1,8 +1,8 @@
-@page
+@page "/"
 @model Andritchi_Ana_Lab2.Pages.Books.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Books";
 }
 
 <h1>Index</h1>
@@ -10,56 +10,55 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <form method="get">
     <select asp-for="AuthorID" asp-items="Model.Authors" class="form-control" style="max-width:300px; display:inline-block">
         <option value="">All authors</option>
     </select>
     <input type="submit" value="Filter" class="btn btn-primary" />
 </form>
+
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Author)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].PublishingDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book[0].Publisher.PublisherName)
+            <th>Book Title</th>
+            <th>Author</th>
+            <th>Price</th>
+            <th>Publishing Date</th>
+            <th>Publisher</th>
+            <th>Categories</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Book) {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PublishingDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher.PublisherName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.BookD.Books)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.BookID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.PublishingDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.Publisher.PublisherName)</td>
+                <td>
+                    @{
+                        foreach (var category in item.BookCategories)
+                        {
+                            @category.Category.ID
+                            @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
