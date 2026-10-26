@@ -11,6 +11,17 @@
     <a asp-page="Create">Create New</a>
 </p>
 
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Book Title / Author Name:
+            <input type="text" name="searchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
 <form method="get">
     <select asp-for="AuthorID" asp-items="Model.Authors" class="form-control" style="max-width:300px; display:inline-block">
         <option value="">All authors</option>
@@ -21,10 +32,14 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Book Title</th>
-            <th>Author</th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort" asp-route-searchString="@Model.CurrentFilter">Book Title</a>
+            </th>
             <th>Price</th>
             <th>Publishing Date</th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.AuthorSort" asp-route-searchString="@Model.CurrentFilter">Author</a>
+            </th>
             <th>Publisher</th>
             <th>Categories</th>
             <th></th>
@@ -40,17 +55,15 @@
             }
             <tr class="@selectedRow">
                 <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                <td>@Html.DisplayFor(modelItem => item.Author.FullName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Price)</td>
                 <td>@Html.DisplayFor(modelItem => item.PublishingDate)</td>
-                <td>@Html.DisplayFor(modelItem => item.Publisher.PublisherName)</td>
+                <td>@item.Author?.FullName</td>
+                <td>@item.Publisher?.PublisherName</td>
                 <td>
-                    @{
-                        foreach (var category in item.BookCategories)
-                        {
-                            @category.Category.ID
-                            @: @category.Category.CategoryName <br />
-                        }
+                    @foreach (var category in item.BookCategories)
+                    {
+                        @category.Category.ID
+                        @: @category.Category.CategoryName <br />
                     }
                 </td>
                 <td>
