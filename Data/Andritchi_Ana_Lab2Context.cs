@@ -15,5 +15,7 @@ namespace Andritchi_Ana_Lab2.Data
         public DbSet<Author> Author { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<BookCategory> BookCategory { get; set; } = default!;
+        public DbSet<Member> Member { get; set; } = default!;
+        public DbSet<Borrowing> Borrowing { get; set; } = default!;
     }
 }
