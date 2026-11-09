@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Andritchi_Ana_Lab2.Data;
 using Andritchi_Ana_Lab2.Models;
-
 namespace Andritchi_Ana_Lab2.Pages.Borrowings
 {
     public class DetailsModel : PageModel

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Andritchi_Ana_Lab2.Data;
@@ -5,6 +6,7 @@ using Andritchi_Ana_Lab2.Models;
 
 namespace Andritchi_Ana_Lab2.Pages.Books
 {
+    [Authorize(Roles = "Admin")]
     public class CreateModel : BookCategoriesPageModel
     {
         private readonly Andritchi_Ana_Lab2Context _context;

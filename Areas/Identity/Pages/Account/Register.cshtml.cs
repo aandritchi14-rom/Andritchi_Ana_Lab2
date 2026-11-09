@@ -98,6 +98,7 @@ namespace Andritchi_Ana_Lab2.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     Member ??= new Member();
                     Member.Email = Input.Email;
